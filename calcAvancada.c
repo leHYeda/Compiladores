@@ -111,11 +111,17 @@ struct ast *newflow(int nodetype, struct ast *cond, struct ast *tl, struct ast *
 }
 
 void treefree(struct ast *a) {
+    if (!a) {
+        return;
+    }
     switch(a->nodetype) {
         /* duas subarvores */
         case '+': case '-': case '*': case '/': case 'L':
+        case '&': case '|':
         case '1': case '2': case '3': case '4': case '5': case '6':
             treefree(a->r);
+            treefree(a->l);
+            break;
         /* uma subarvore */
         case 'C': case 'F':
             treefree(a->l);
@@ -123,13 +129,13 @@ void treefree(struct ast *a) {
         case 'K': case 'N':
             break;
         case '=':
-            free(((struct symasgn *)a)->v);
+            treefree(((struct symasgn *)a)->v);
             break;
         /* acima de 3 subarvores */
         case 'I': case 'W':
-            free(((struct flow *)a)->cond);
-            if(((struct flow *)a)->tl) treefree(((struct flow *)a)->tl);
-            if(((struct flow *)a)->el) treefree(((struct flow *)a)->el);
+            treefree(((struct flow *)a)->cond);
+            treefree( ((struct flow *)a)->tl);
+            treefree( ((struct flow *)a)->el);
             break;
         default: printf("erro interno: free bad node %c\n", a->nodetype);
     }
@@ -265,6 +271,9 @@ double eval(struct ast *a) {
         case '4': v = (eval(a->l) == eval(a->r)) ? 1 : 0; break;
         case '5': v = (eval(a->l) >= eval(a->r)) ? 1 : 0; break;
         case '6': v = (eval(a->l) <= eval(a->r)) ? 1 : 0; break;
+
+        case '&': v = (eval(a->l) != 0 && eval(a->r) != 0) ? 1 : 0; break;
+        case '|': v = (eval(a->l) != 0 || eval(a->r) != 0) ? 1 : 0; break;
 
         /* if/then/else */
         case 'I':

@@ -1,0 +1,4 @@
+.calcAvancada
+.calcAvancada.lex.c
+.calcAvancada.tab.c
+.calcAvancada.tab.h

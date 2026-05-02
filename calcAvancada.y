@@ -19,9 +19,11 @@
 %token <fn> FUNC
 %token EOL
 
-%token IF THEN ELSE WHILE DO LET
+%token IF THEN ELSE WHILE DO LET FOR
+%token AND OR
 
 %nonassoc <fn> CMP
+%left AND OR
 %right '='
 %left '+' '-'
 %left '*' '/'
@@ -36,6 +38,11 @@
 stmt: IF exp THEN list { $$ = newflow('I', $2, $4, NULL); }
     | IF exp THEN list ELSE list { $$ = newflow('I', $2, $4, $6); }
     | WHILE exp DO list { $$ = newflow('W', $2, $4, NULL); }
+    |   FOR '(' exp ';' exp ';' exp ')' list {
+                struct ast *body = newast('L', $9, $7);
+                struct ast *while_loop = newflow('W', $5, body, NULL);
+                $$ = newast('L', $3, while_loop);
+            }
     | exp
     ;
 
@@ -48,6 +55,8 @@ exp: exp CMP exp { $$ = newcmp($2, $1, $3); }
    | exp '-' exp { $$ = newast('-', $1, $3); }
    | exp '*' exp { $$ = newast('*', $1, $3); }
    | exp '/' exp { $$ = newast('/', $1, $3); }
+   | exp AND exp { $$ = newast('&', $1, $3); }
+   | exp OR exp  { $$ = newast('|', $1, $3); }
    | '(' exp ')' { $$ = $2; }
    | NUMBER      { $$ = newnum($1); }
    | NAME        { $$ = newref($1); }

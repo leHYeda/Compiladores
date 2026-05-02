@@ -37,6 +37,9 @@ EXP ([Ee][-+]?[0-9]+)
 "while" { return WHILE; }
 "do"    { return DO; }
 "let"   { return LET; }
+"for"   { return FOR; }
+"&&"    { return AND; }
+"||"    { return OR; }
 
  /* funcoes pre-definidas */
 "sqrt"  { yylval.fn = B_sqrt; return FUNC; }
@@ -51,7 +54,7 @@ EXP ([Ee][-+]?[0-9]+)
 "."?[0-9]+{EXP}? { yylval.d = atof(yytext); return NUMBER; }
 
 "//".* { /* ignora comentarios */ }
-[ \t]   { /* ignora espaco em branco */ }
+[ \t\r]   { /* ignora espaco em branco */ }
 
  /* ignora continuacao de linha com barra invertida */
 \\\n    { printf("c> "); }
