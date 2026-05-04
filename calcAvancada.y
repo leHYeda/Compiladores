@@ -38,11 +38,11 @@
 stmt: IF exp THEN list { $$ = newflow('I', $2, $4, NULL); }
     | IF exp THEN list ELSE list { $$ = newflow('I', $2, $4, $6); }
     | WHILE exp DO list { $$ = newflow('W', $2, $4, NULL); }
-    |   FOR '(' exp ';' exp ';' exp ')' list {
-                struct ast *body = newast('L', $9, $7);
-                struct ast *while_loop = newflow('W', $5, body, NULL);
-                $$ = newast('L', $3, while_loop);
-            }
+    | FOR '(' exp ';' exp ';' exp ')' list {
+            struct ast *body = newast('L', $9, $7);
+            struct ast *while_loop = newflow('W', $5, body, NULL);
+            $$ = newast('L', $3, while_loop);
+        }
     | exp
     ;
 
