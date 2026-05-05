@@ -166,7 +166,7 @@ static double callbuiltin(struct fncall *f) {
         case B_sqrt: return sqrt(v);
         case B_exp: return exp(v);
         case B_log: return log(v);
-        case B_print: printf("= %4.4g\n", v); return v;
+        case B_print: fprintf(yyout, "= %4.4g\n", v); return v;
         default: yyerror("Funcao pre-definida desconhecida"); return 0.0;
     }
 }
@@ -319,7 +319,30 @@ void yyerror(char *s, ...) {
     va_end(ap);
 }
 
-int main() {
-    printf("> ");
+extern FILE *yyin;
+extern FILE *yyout;
+
+int main(int argc, char **argv) {
+    if(argc > 1){
+        FILE * arquivoEntrada = fopen(argv[1], "r");
+        if(!arquivoEntrada){
+            printf("Arquivo não encontrado\n");
+            return 1;
+        }
+        yyin = arquivoEntrada;
+    }
+    //Segundo parâmetro é o arquivo de saída
+    if(argc > 2){
+        FILE * arquivoSaida = fopen(argv[2], "w");
+        if(!arquivoSaida){
+            printf("Arquivo não encontrado\n");
+            return 1;
+        }
+        yyin = arquivoSaida;
+    } else {
+        yyout = stdout; 
+        printf("> ");
+    }
+
     return yyparse();
 }

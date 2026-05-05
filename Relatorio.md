@@ -21,7 +21,7 @@ A análise léxica reconhece os seguintes padrões:
 
 **OBS:** Um agrupamento conceitual foi feito acima, mas o diagrama de transições reflete exatamente o funcionamento do scanner, cada token diferente precisa de um estado de aceitação distinto (pois retornam códigos diferentes ao parser: IF, THEN, ELSE…).
 
-![Diagrama Do Debuggex com as regras léxicas](/DiagramaTransicao.png)
+![Diagrama Do Debuggex com as regras léxicas](DiagramaTransicao.png)
 
 ## Descrição do Analisador Léxico (FLEX)
 Implementado no arquivo `calcAvancada.l`. Utiliza expressões regulares para tokenizar o fluxo de entrada.
@@ -39,7 +39,7 @@ Gerenciada estaticamente no arquivo `calcAvancada.c`.
 
 ### Diagrama:
 
-![Diagrama Do Railroad](/DiagramaSintatico.png)
+![Diagrama Do Railroad](DiagramaSintatico.png)
 
 ### Gramática
 
