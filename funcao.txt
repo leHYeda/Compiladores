@@ -1,0 +1,3 @@
+sqrt(144) //outras funcoes ainda funcionam
+let loop(x, y) = for(i=0;i<y;i=i+1) x = x * 2 ;;print(x);
+loop(10, 3)

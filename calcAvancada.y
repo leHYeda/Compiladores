@@ -22,9 +22,9 @@
 %token IF THEN ELSE WHILE DO LET FOR
 %token AND OR
 
-%nonassoc <fn> CMP
-%left AND OR
 %right '='
+%left AND OR
+%nonassoc <fn> CMP
 %left '+' '-'
 %left '*' '/'
 

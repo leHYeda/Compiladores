@@ -8,11 +8,13 @@
 #include "calcAvancada.h"
 
 struct symbol symtab[NHASH];
+extern FILE *yyin;
+extern FILE *yyout;
 
 /* funcoes em C para TS */
 static unsigned symhash(char *sym) {
-    unsigned int hash = 0;
-    unsigned c;
+  unsigned int hash = 0;
+  unsigned c;
     while(c = *sym++) hash = hash*9 ^ c;
     return hash;
 }
@@ -319,8 +321,6 @@ void yyerror(char *s, ...) {
     va_end(ap);
 }
 
-extern FILE *yyin;
-extern FILE *yyout;
 
 int main(int argc, char **argv) {
     if(argc > 1){

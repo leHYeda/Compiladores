@@ -1,0 +1,4 @@
+verdadeiro = 1
+falso = 0//Teste comentario
+if (verdadeiro && falso) then print(999); else print(0);
+if (verdadeiro || falso) then print(111); else print(0);
