@@ -125,9 +125,11 @@ x = 0
 while x < 3 do x = x + 1;//While ainda funciona
 soma = 0
 for(i = 1; i <= 5; i = i + 1) soma = soma + i;
+soma
+
 ```
 
-Saída Esperada: `= 13` (Soma de 10 + 0 + 1 + 2)
+Saída Esperada: `>= 6` e `= 15` (Acumulo do i e soma de 1+2+3+4+5)
 
 ##### Teste 3: Precedência de Operadores e Parênteses
 
